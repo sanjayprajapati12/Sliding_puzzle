@@ -5,8 +5,13 @@
     border: none;
     font-size: 16px;
     border-radius: 15px;
-    /* margin: 0.5rem; */
-    width: 20rem;
+    margin: auto ;
+    width: 90%;
+}
+
+.button_common:hover {
+    background-color: #ccc;
+    color: olivedrab;
 }
 
 .button_common_start {
@@ -16,7 +21,8 @@
     border: none;
     font-size: 16px;
     border-radius: 15px;
-    /* margin: 0.5rem; */
+    margin: 0.5rem;
+    margin-block: auto ;
     width: 40%;
 }
 

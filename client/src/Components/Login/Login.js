@@ -4,8 +4,11 @@ import loginstyle from "./Login.module.css";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
 import { server } from "../../server.js";
+import { setSelectionRange } from "@testing-library/user-event/dist/utils";
+import LoadingSpinner from "../Loading/LoadingSpinner";
 
 const Login = ({ updateUser }) => {
+  const [load , setLoad] = useState(false);
   const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -46,49 +49,59 @@ const Login = ({ updateUser }) => {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(user);
+      setLoad(true);
       axios.post(`${server}/login`, user).then((res) => {
         alert(res.data.message);
         if (res.data.ok === true) {
           updateUser(res.data.user); 
           navigate("/", { replace: true });
         }
-      });
+      })
+      .finally(()=>{
+        setLoad(false);
+      })
     }
   }, [formErrors]);
 
   return (
-    <div className={loginstyle.login}>
-      <form>
-        <h1>Login</h1>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Email"
-          onChange={changeHandler}
-          value={user.email}
-        />
-        <p className={basestyle.error}>{formErrors.email}</p>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Password"
-          onChange={changeHandler}
-          value={user.password}
-        />
-        <p className={basestyle.error}>{formErrors.password}</p>
-        <button className={basestyle.button_common} onClick={loginHandler}>
-          Login
-        </button>
-      </form>
-      <div className="container"> 
-        <div className="row">
-          <NavLink className="centre" to="/signup"> Not yet Register ? Register Now</NavLink>
-          <NavLink className="centre" to="/verify"> Want to verify your mail ? Verify Now</NavLink>
-        </div>
-      </div>
-    </div>
+    <>
+    {load ? (
+          <LoadingSpinner></LoadingSpinner>
+        ) : (
+          <div className={loginstyle.login}>
+            <form>
+              <h1>Login</h1>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email"
+                onChange={changeHandler}
+                value={user.email}
+              />
+              <p className={basestyle.error}>{formErrors.email}</p>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Password"
+                onChange={changeHandler}
+                value={user.password}
+              />
+              <p className={basestyle.error}>{formErrors.password}</p>
+              <button className={basestyle.button_common} onClick={loginHandler}>
+                Login
+              </button>
+            </form>
+            <div className="container"> 
+              <div className="row">
+                <NavLink className="centre" to="/signup"> Not yet Register ? Register Now</NavLink>
+                <NavLink className="centre" to="/verify"> Want to verify your mail ? Verify Now</NavLink>
+              </div>
+            </div>
+          </div>
+      )}
+    </>
   );
 };
 export default Login;

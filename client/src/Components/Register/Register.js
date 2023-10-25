@@ -3,10 +3,12 @@ import basestyle from "../Base.module.css";
 import registerstyle from "./Register.module.css";
 import axios from "axios";
 import { server } from "../../server";
+import LoadingSpinner from "../Loading/LoadingSpinner";
 
 import { useNavigate, NavLink } from "react-router-dom";
 const Register = () => {
   const navigate = useNavigate();
+  const [load , setLoad] = useState(false);
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -60,6 +62,7 @@ const Register = () => {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(user);
+      setLoad(true);
       axios.post(`${server}/`, user).then((res) => {
         console.log("here" , res.data);
         if (res.data.valid === true) {
@@ -72,66 +75,75 @@ const Register = () => {
       .catch((res)=>{
         console.log(res);
       })
+      .finally(()=>{
+        setLoad(false);
+      })
     }
   }, [formErrors]);
 
   return (
     <>
-      <div className={registerstyle.register}>
-        <form>
-          <h1>Create your account</h1>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            placeholder="User Name"
-            onChange={changeHandler}
-            value={user.username}
-          />
-          <p className={basestyle.error}>{formErrors.username}</p>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email"
-            onChange={changeHandler}
-            value={user.email}
-          />
-          <p className={basestyle.error}>{formErrors.email}</p>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
-            onChange={changeHandler}
-            value={user.password}
-          />
-          <p className={basestyle.error}>{formErrors.password}</p>
-          <input
-            type="password"
-            name="password2"
-            id="password2"
-            placeholder="Confirm Password"
-            onChange={changeHandler}
-            value={user.password2}
-          />
-          <p className={basestyle.error}>{formErrors.password2}</p>
-          <button className={basestyle.button_common} onClick={signupHandler}>
-            Register
-          </button>
-        </form>
-        <div className="container">
-          <div className="row">
-            <NavLink className="centre" to="/login">
-              Already registered? Login
-            </NavLink>
-            <NavLink className="centre" to="/verify">
-              {" "}
-              Want to verify your mail ? Verify{" "}
-            </NavLink>
+      {load ? (
+          <LoadingSpinner></LoadingSpinner>
+        ) : (
+          <div className={registerstyle.register}>
+            <form>
+              <h1>Create your account</h1>
+              {/* {load && "loading.... "} */}
+              <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="User Name"
+                onChange={changeHandler}
+                value={user.username}
+              />
+              <p className={basestyle.error}>{formErrors.username}</p>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email"
+                onChange={changeHandler}
+                value={user.email}
+              />
+              <p className={basestyle.error}>{formErrors.email}</p>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Password"
+                onChange={changeHandler}
+                value={user.password}
+              />
+              <p className={basestyle.error}>{formErrors.password}</p>
+              <input
+                type="password"
+                name="password2"
+                id="password2"
+                placeholder="Confirm Password"
+                onChange={changeHandler}
+                value={user.password2}
+              />
+              <p className={basestyle.error}>{formErrors.password2}</p>
+              <button className={basestyle.button_common} onClick={signupHandler}>
+                Register
+              </button>
+            </form>
+            <div className="container">
+              <div className="row">
+                <NavLink className="centre" to="/login">
+                  Already registered? Login
+                </NavLink>
+                <NavLink className="centre" to="/verify">
+                  {" "}
+                  Want to verify your mail ? Verify{" "}
+                </NavLink>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+      )}
+
     </>
   );
 };
