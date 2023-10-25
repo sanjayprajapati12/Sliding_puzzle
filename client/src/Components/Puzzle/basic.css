@@ -1,0 +1,16 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    border: red;
+}
+
+img{
+    margin: 1rem 0rem;
+    align-self: start;
+    height: 50px;
+    width: 50px;
+}
+
+.board {
+    align-self: center;
+}

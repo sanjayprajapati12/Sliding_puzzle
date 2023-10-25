@@ -1,0 +1,1 @@
+export const server = "https://puzzle-app-s62u.onrender.com";

@@ -1,0 +1,68 @@
+.button_common {
+    background-color: olivedrab;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    font-size: 16px;
+    border-radius: 15px;
+    /* margin: 0.5rem; */
+    width: 20rem;
+}
+
+.button_common_start {
+    background-color: olivedrab;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    font-size: 16px;
+    border-radius: 15px;
+    /* margin: 0.5rem; */
+    width: 40%;
+}
+
+.error {
+    color: red;
+    text-align: left;
+    margin: auto;
+    font-size: 14px;
+    padding: 0px 1rem;
+}
+
+
+.navbar {
+    border : black;
+    align-items: center;
+    padding: 30px;
+}
+
+.navbar_username {
+    color: 1C4072;
+    font-weight: bold;
+    margin-right: auto ;
+}
+
+.navbar_best_score {
+    font-size: 16px;
+}
+
+.navbar_logout {
+    color: white;
+    font-size: 16px;
+    background-color: olivedrab;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 15px;
+    text-decoration: none;
+    margin-left: auto ;
+}
+  
+.navbar_logout:hover {
+   background-color: #ccc;
+   color: olivedrab;
+}
+
+.button_common_start:hover {
+   background-color: #ccc;
+   color: olivedrab;
+}
+  
