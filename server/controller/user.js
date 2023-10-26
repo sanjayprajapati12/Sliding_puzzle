@@ -242,7 +242,6 @@ exports.addTime = async (req, res, next) => {
     if (!user) {
       return res.json({ message: "No user found" });
     }
-
     user.time.push(new_time);
     await user.save();
     res.json({
