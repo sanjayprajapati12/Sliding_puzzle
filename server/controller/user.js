@@ -68,7 +68,7 @@ exports.signIn = (req, res, next) => {
             to: req.body.email,
             subject: "Email verification",
             html: `Hello,<br> Please Click on the link and send the below token to verify your email.<br>
-                  token:${secretToken}<br><a href="${process.env.BACKEND_URL}/verify">Click here to verify</a>`
+                  token:${secretToken}<br><a href="${process.env.FRONTEND_URL}/verify">Click here to verify</a>`
           };
           
           await transporter.sendMail(message, async (err, info) => {
